@@ -27,9 +27,17 @@ app.put('/livros/:id',(req,res)=>{
     livros[index].titulo = req.body.titulo;
     res.json(livros);
 })
+
 app.get('/livros/:id',(req,res)=>{
     let index = buscaLivro(req.params.id); 
     res.json(livros[index]);
+})
+
+app.delete('/livros/:id',(req,res)=>{
+    let {id} = req.params; //-> Descontruindo
+    let index = buscaLivro(id);
+    livros.splice(index,1);
+    res.send(`Livro ${id} removido com sucesso`);
 })
 
 function buscaLivro(id){
