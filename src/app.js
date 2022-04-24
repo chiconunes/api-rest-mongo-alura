@@ -1,6 +1,5 @@
 import express from "express";
 import db from "./config/dbConect.js";
-import livros from "./models/Livro.js";
 import routes from "./routes/index.js";
 
 import chalk from "chalk";
@@ -11,31 +10,7 @@ db.once("open",()=>{
 })
 
 const app = express();
-
-app.use(express.json())
-
-routes(app)
-   
-app.put('/livros/:id',(req,res)=>{
-    let index = buscaLivro(req.params.id);
-    livros[index].titulo = req.body.titulo;
-    res.json(livros);
-})
-
-// app.get('/livros/:id',(req,res)=>{
-//     let index = buscaLivro(req.params.id); 
-//     res.json(livros[index]);
-// })
-
-app.delete('/livros/:id',(req,res)=>{
-    let {id} = req.params; //-> Descontruindo
-    let index = buscaLivro(id);
-    livros.splice(index,1);
-    res.send(`Livro ${id} removido com sucesso`);
-})
-
-function buscaLivro(id){
-    return livros.findIndex(livro => livro.id == id)
-}
-
+app.use(express.json());
+routes(app);
+ 
 export default app
